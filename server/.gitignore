@@ -17,5 +17,5 @@
 #*README_files/
 
 
-# if nore the database
 database.sql
+.env
