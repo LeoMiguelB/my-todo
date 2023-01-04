@@ -47,8 +47,6 @@ app.get("/todos/:id", async (req, res) => {
 
 app.post("/todos", async (req, res) => {
   try {
-    console.log(req.body);
-
     const { content } = req.body;
 
     const date = new Date().toISOString();
@@ -64,17 +62,15 @@ app.post("/todos", async (req, res) => {
   }
 });
 
-//update a todo
+//update a todo to change it's completeness
 
 app.put("/todos/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { description } = req.body;
-
     const updateTodo = await pool.query(
-      "UPDATE todo SET description = $1 WHERE todo_id = $2",
-      [description, id]
+      "UPDATE todo SET completed = $1 WHERE id = $2",
+      [true, id]
     );
 
     res.json(`updated todo with id ${id}`);
@@ -89,9 +85,7 @@ app.delete("/todos/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const deleteTodo = await pool.query("DELETE FROM todo WHERE todo_id = $1", [
-      id,
-    ]);
+    const deleteTodo = await pool.query("DELETE FROM todo WHERE id = $1", [id]);
 
     res.json(`todo with id ${id} was successfully deleted!`);
   } catch (error) {
