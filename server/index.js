@@ -62,15 +62,34 @@ app.post("/todos", async (req, res) => {
   }
 });
 
-//update a todo to change it's completeness
-
+//change the compeleteness of a todo
 app.put("/todos/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
+    const { completed } = req.body;
+
     const updateTodo = await pool.query(
       "UPDATE todo SET completed = $1 WHERE id = $2",
-      [true, id]
+      [completed, id]
+    );
+
+    res.json(`updated todo with id ${id}`);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+//update a todo
+app.put("/todos-update/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const { content } = req.body;
+
+    const updateTodo = await pool.query(
+      "UPDATE todo SET content = $1 WHERE id = $2",
+      [content, id]
     );
 
     res.json(`updated todo with id ${id}`);

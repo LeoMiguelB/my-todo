@@ -52,10 +52,11 @@ const AddTodoForm = () => {
         onChange={inputTextHandler}
         type="text"
         className="todo-input"
+        maxLength={40}
       />
       {/* button styles comes from link in html file */}
       <button onClick={onSaveTodo} className="todo-button" type="submit">
-        <i className="fas fa-plus-square"></i>
+        <i className="fa-sharp fa-solid fa-paperclip"></i>
       </button>
       <div className="select">
         <select onChange={statusHandler} name="todos" className="filter-todo">

@@ -24,6 +24,21 @@ export const addTodo = createAsyncThunk(
   }
 );
 
+export const editTodo = createAsyncThunk("todos/addTodos", async (todo) => {
+  const { id, content } = todo;
+  const response = await fetch(`http://localhost:3100/todos-update/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ content: content }),
+  }).catch((err) => {
+    console.log(err);
+  });
+
+  return response.json();
+});
+
 export const fetchTodos = createAsyncThunk(
   "todos/fetchTodos",
   async (status) => {
@@ -38,13 +53,14 @@ export const fetchTodos = createAsyncThunk(
 
 export const completeTodo = createAsyncThunk(
   "todos/completedTodo",
-  async (id) => {
+  async (todo) => {
+    const { id, completed } = todo;
     const response = await fetch(`http://localhost:3100/todos/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({}),
+      body: JSON.stringify({ completed: completed }),
     }).catch((err) => {
       console.log(err);
     });
