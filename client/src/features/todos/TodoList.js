@@ -42,12 +42,17 @@ const TodoList = () => {
       break;
   }
 
+  // ordered todos -- by date/time
+  const orderedTodos = filteredTodos
+    .slice()
+    .sort((a, b) => b.date.localeCompare(a.date));
+
   if (todoStatus === "loading") {
     content = <SpinnerDotted />;
   } else if (todoStatus === "successful") {
     content = (
       <ul className="todo-list">
-        {filteredTodos.map((todo) => (
+        {orderedTodos.map((todo) => (
           <Todo todo={todo} />
         ))}
       </ul>

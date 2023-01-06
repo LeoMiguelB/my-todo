@@ -23,8 +23,13 @@ const Todo = ({ todo }) => {
     if (completeRequest === "idle" && canEdit && content !== "") {
       try {
         setCompleteRequest("pending");
-        console.log(content);
-        await dispatch(editTodo({ id: todo.id, content: content })).unwrap();
+        await dispatch(
+          editTodo({
+            id: todo.id,
+            content: content,
+            date: new Date().toISOString(),
+          })
+        ).unwrap();
         await dispatch(fetchTodos()).unwrap();
       } catch (error) {
         console.error(error);

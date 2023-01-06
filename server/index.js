@@ -85,11 +85,11 @@ app.put("/todos-update/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { content } = req.body;
+    const { content, date } = req.body;
 
     const updateTodo = await pool.query(
-      "UPDATE todo SET content = $1 WHERE id = $2",
-      [content, id]
+      "UPDATE todo SET content = $1, date = $2 WHERE id = $3",
+      [content, date, id]
     );
 
     res.json(`updated todo with id ${id}`);

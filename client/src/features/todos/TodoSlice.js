@@ -25,13 +25,13 @@ export const addTodo = createAsyncThunk(
 );
 
 export const editTodo = createAsyncThunk("todos/addTodos", async (todo) => {
-  const { id, content } = todo;
+  const { id, content, date } = todo;
   const response = await fetch(`http://localhost:3100/todos-update/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ content: content }),
+    body: JSON.stringify({ content: content, date: date }),
   }).catch((err) => {
     console.log(err);
   });
