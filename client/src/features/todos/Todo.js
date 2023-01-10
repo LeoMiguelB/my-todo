@@ -1,9 +1,5 @@
 import React, { useState } from "react";
 
-import { deleteTodos, fetchTodos, completeTodo } from "./TodoSlice";
-
-import { useDispatch } from "react-redux";
-
 import EditTodoForm from "./EditTodoForm";
 
 import {
@@ -12,8 +8,6 @@ import {
 } from "../api/apiSlice";
 
 const Todo = ({ todo }) => {
-  const [completeRequest, setCompleteRequest] = useState("idle");
-
   const [changeCompleteness, { isLoading }] = useChangeCompletenessMutation();
   const [deleteTodo] = useDeleteTodoMutation();
 
@@ -47,11 +41,7 @@ const Todo = ({ todo }) => {
 
   if (canEdit) {
     todoContent = (
-      <EditTodoForm
-        setCanEdit={setCanEdit}
-        canEdit={canEdit}
-        todo={todo}
-      />
+      <EditTodoForm setCanEdit={setCanEdit} canEdit={canEdit} todo={todo} />
     );
   } else {
     todoContent = (

@@ -23,14 +23,7 @@ const TodoSlice = createSlice({
   },
 });
 
-export const {
-  todoAdded,
-  todoCompleted,
-  todoUpdated,
-  changeStatus,
-  deleteTodo,
-  changeSubmitted,
-} = TodoSlice.actions;
+export const { changeStatus } = TodoSlice.actions;
 
 //get all the current todos
 export const selectAllTodos = (state) => state.todos.todos;
