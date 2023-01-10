@@ -1,64 +1,62 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo } from "react";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { selectAllTodos, fetchTodos, getStatus } from "./TodoSlice";
+import { getStatus } from "./TodoSlice";
 
 import Todo from "./Todo";
 
 import { SpinnerDotted } from "spinners-react";
 
+import { useGetTodosQuery } from "../api/apiSlice";
+
 const TodoList = () => {
-  const todoStatus = useSelector((state) => state.todos.statusSpec);
-
-  const todos = useSelector(selectAllTodos);
-
   const status = useSelector(getStatus);
 
-  const error = useSelector((state) => state.todos.error);
-
-  const dispatch = useDispatch();
-
-  //fetch the todos
-  useEffect(() => {
-    if (todoStatus === "idle") {
-      dispatch(fetchTodos());
-    }
-  }, [todoStatus, dispatch]);
+  const {
+    data: todos = [],
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetTodosQuery();
 
   let content;
 
   let filteredTodos;
 
-  switch (status) {
-    case "completed":
-      filteredTodos = todos.filter((todo) => todo.completed === true);
-      break;
-    case "uncompleted":
-      filteredTodos = todos.filter((todo) => todo.completed === false);
-      break;
-    default:
-      filteredTodos = todos;
-      break;
+  if (status === "completed") {
+    filteredTodos = todos.filter((todo) => todo.completed === true);
+  } else if (status === "uncompleted") {
+    filteredTodos = todos.filter((todo) => todo.completed === false);
+  } else {
+    filteredTodos = todos;
   }
 
   // ordered todos -- by date/time
-  const orderedTodos = filteredTodos
-    .slice()
-    .sort((a, b) => b.date.localeCompare(a.date));
+  //only run if it needs to order hence use memo
+  const orderedTodos = useMemo(() => {
+    const orderedTodos = filteredTodos
+      .slice()
+      .sort((a, b) => b.date.localeCompare(a.date));
+    return orderedTodos;
+  }, [todos, status]);
 
-  if (todoStatus === "loading") {
+  //show loading screen
+  if (isLoading) {
     content = <SpinnerDotted />;
-  } else if (todoStatus === "successful") {
+
+    // show the todos
+  } else if (isSuccess) {
     content = (
       <ul className="todo-list">
         {orderedTodos.map((todo) => (
-          <Todo todo={todo} />
+          <Todo key={todo.id} todo={todo} />
         ))}
       </ul>
     );
-  } else if (todoStatus === "failed") {
-    content = <div>{error}</div>;
+  } else if (isError) {
+    content = <div>{error.toString()}</div>;
   }
 
   return <div className="todo-container">{content}</div>;

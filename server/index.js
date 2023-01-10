@@ -17,7 +17,6 @@ app.use(
 // ROUTES
 
 //get all todos
-
 app.get("/todos", async (req, res) => {
   try {
     const allTodos = await pool.query("SELECT * FROM todo");
@@ -28,24 +27,23 @@ app.get("/todos", async (req, res) => {
   }
 });
 
-//get a todo
-app.get("/todos/:id", async (req, res) => {
-  const { id } = req.params;
+// //get a todo
+// app.get("/todos/:id", async (req, res) => {
+//   const { id } = req.params;
 
-  try {
-    const todo = await pool.query("SELECT * FROM todo WHERE todo_id = ($1)", [
-      id,
-    ]);
+//   try {
+//     const todo = await pool.query("SELECT * FROM todo WHERE todo_id = ($1)", [
+//       id,
+//     ]);
 
-    res.json(todo.rows[0]);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
+//     res.json(todo.rows[0]);
+//   } catch (error) {
+//     console.error(error.message);
+//   }
+// });
 
 //create a todo
-
-app.post("/todos", async (req, res) => {
+app.post("/todos/create-todo", async (req, res) => {
   try {
     const { content } = req.body;
 
@@ -81,7 +79,7 @@ app.put("/todos/:id", async (req, res) => {
 });
 
 //update a todo
-app.put("/todos-update/:id", async (req, res) => {
+app.put("/todos/update/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -99,7 +97,6 @@ app.put("/todos-update/:id", async (req, res) => {
 });
 
 //delete a todo
-
 app.delete("/todos/:id", async (req, res) => {
   try {
     const { id } = req.params;

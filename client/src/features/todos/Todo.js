@@ -6,41 +6,39 @@ import { useDispatch } from "react-redux";
 
 import EditTodoForm from "./EditTodoForm";
 
-const Todo = ({ todo }) => {
-  const dispatch = useDispatch();
+import {
+  useChangeCompletenessMutation,
+  useDeleteTodoMutation,
+} from "../api/apiSlice";
 
-  const [deleteRequest, setDeleteRequest] = useState("idle");
+const Todo = ({ todo }) => {
   const [completeRequest, setCompleteRequest] = useState("idle");
+
+  const [changeCompleteness, { isLoading }] = useChangeCompletenessMutation();
+  const [deleteTodo] = useDeleteTodoMutation();
 
   // for the edit
   const [canEdit, setCanEdit] = useState(false);
 
   const deleteHandler = async () => {
-    if (deleteRequest === "idle") {
+    if (!isLoading) {
       try {
-        setDeleteRequest("pending");
-        await dispatch(deleteTodos(todo.id)).unwrap();
-        await dispatch(fetchTodos()).unwrap();
+        await deleteTodo({ id: todo.id }).unwrap();
       } catch (error) {
         console.error(error);
-      } finally {
-        setDeleteRequest("idle");
       }
     }
   };
 
   const completeHandler = async () => {
-    if (completeRequest === "idle") {
+    if (!isLoading) {
       try {
-        setCompleteRequest("pending");
-        await dispatch(
-          completeTodo({ id: todo.id, completed: !todo.completed })
-        ).unwrap();
-        await dispatch(fetchTodos()).unwrap();
+        await changeCompleteness({
+          id: todo.id,
+          completed: !todo.completed,
+        }).unwrap();
       } catch (error) {
         console.error(error);
-      } finally {
-        setCompleteRequest("idle");
       }
     }
   };
@@ -50,8 +48,6 @@ const Todo = ({ todo }) => {
   if (canEdit) {
     todoContent = (
       <EditTodoForm
-        completeRequest={completeRequest}
-        setCompleteRequest={setCompleteRequest}
         setCanEdit={setCanEdit}
         canEdit={canEdit}
         todo={todo}

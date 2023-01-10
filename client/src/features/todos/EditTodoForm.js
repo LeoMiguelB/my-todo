@@ -1,40 +1,27 @@
 import React, { useState } from "react";
 
-import { fetchTodos, editTodo } from "./TodoSlice";
+import { useEditTodoMutation } from "../api/apiSlice";
 
-import { useDispatch } from "react-redux";
-
-const EditTodoForm = ({
-  completeRequest,
-  setCompleteRequest,
-  setCanEdit,
-  canEdit,
-  todo,
-}) => {
+const EditTodoForm = ({ setCanEdit, canEdit, todo }) => {
   const [content, setContent] = useState("");
+
+  const [editTodo, { isLoading }] = useEditTodoMutation();
 
   const inputTextHandler = (e) => {
     setContent(e.target.value);
   };
 
-  const dispatch = useDispatch();
-
   const editHandler = async () => {
-    if (completeRequest === "idle" && canEdit && content !== "") {
+    if (!isLoading && canEdit && content !== "") {
       try {
-        setCompleteRequest("pending");
-        await dispatch(
-          editTodo({
-            id: todo.id,
-            content: content,
-            date: new Date().toISOString(),
-          })
-        ).unwrap();
-        await dispatch(fetchTodos()).unwrap();
+        await editTodo({
+          id: todo.id,
+          content: content,
+          date: new Date().toISOString(),
+        }).unwrap();
       } catch (error) {
         console.error(error);
       } finally {
-        setCompleteRequest("idle");
         setCanEdit(false);
       }
     }

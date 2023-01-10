@@ -1,35 +1,32 @@
 import React, { useState } from "react";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { changeStatus, addTodo, fetchTodos } from "./TodoSlice";
+import { changeStatus, addTodo, changeSubmitted } from "./TodoSlice";
+
+import { useCreateTodoMutation } from "../api/apiSlice";
 
 const AddTodoForm = () => {
   const dispatch = useDispatch();
 
   const [content, setContent] = useState("");
 
-  // status for the POST
-  const [addRequestStatus, setAddRequestStatus] = useState("idle");
+  const [createTodo, { isLoading }] = useCreateTodoMutation();
 
   const onSaveTodo = async (e) => {
     // prevent the page from reloading
     e.preventDefault();
 
     // there must be content
-    const canSave = content && content !== "" && addRequestStatus === "idle";
+    const canSave = content && content !== "" && !isLoading;
 
     // only if the content is filled in
     if (canSave) {
       try {
-        setAddRequestStatus("pending");
-        await dispatch(addTodo(content)).unwrap();
-        await dispatch(fetchTodos()).unwrap();
+        await createTodo({ content }).unwrap();
         setContent("");
       } catch (err) {
         console.error(err);
-      } finally {
-        setAddRequestStatus("idle");
       }
     }
   };
