@@ -28,6 +28,7 @@ const Login = () => {
 
   const token = useSelector(selectCurrentToken);
 
+  //currently not working
   useEffect(() => {
     //check if the user has already logged in
     if (token !== null) {
@@ -53,10 +54,11 @@ const Login = () => {
       setPassword("");
       navigate("/todos");
     } catch (error) {
-      if (!error?.response) {
+      console.log(error);
+      if (!error?.originalStatus) {
         setErrMsg("no server response");
       } else if (error.originalStatus === 400) {
-        setErrMsg("Missing username or password");
+        setErrMsg("Wrong username or password");
       } else {
         setErrMsg("Login Failed");
       }
@@ -104,6 +106,12 @@ const Login = () => {
         />
         <button>Sign In</button>
       </form>
+
+      <footer>
+        <button className="logout-btn" onClick={() => navigate("/")}>
+          <span>Back To Home</span>
+        </button>
+      </footer>
     </section>
   );
 

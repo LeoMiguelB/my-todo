@@ -87,6 +87,12 @@ const Register = () => {
         />
         <button>Register</button>
       </form>
+
+      <footer>
+        <button className="logout-btn" onClick={() => navigate("/")}>
+          <span>Back To Home</span>
+        </button>
+      </footer>
     </section>
   );
 

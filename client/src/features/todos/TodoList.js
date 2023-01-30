@@ -22,8 +22,6 @@ const TodoList = () => {
     error,
   } = useGetTodosQuery();
 
-  console.log(todos);
-
   let content;
 
   let filteredTodos;
@@ -47,8 +45,6 @@ const TodoList = () => {
 
   //show loading screen
   if (isLoading) {
-    // currently not refetching
-    console.log("refetched");
     content = <SpinnerDotted />;
 
     // show the todos

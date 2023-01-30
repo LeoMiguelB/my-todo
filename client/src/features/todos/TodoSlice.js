@@ -23,7 +23,6 @@ const TodoSlice = createSlice({
       state.todos = [];
       state.status = "all";
       state.error = null;
-      console.log(state.todos, state.status, state.error);
     },
   },
 });

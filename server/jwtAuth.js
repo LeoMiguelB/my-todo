@@ -54,7 +54,7 @@ app.post("/login", async (req, res) => {
     );
 
     if (result.rowCount === 0) {
-      res.json({ error: "Incorrect username or password" });
+      res.sendStatus(400);
     } else {
       // compare salted password
       const saltedPassword = result.rows[0].password;
