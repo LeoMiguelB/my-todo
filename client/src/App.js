@@ -2,23 +2,34 @@ import React from "react";
 
 import "./App.css";
 
-import AddTodoForm from "./features/todos/AddTodoForm";
+import TodosPage from "./components/TodosPage";
 
-import TodoList from "./features/todos/TodoList";
+import Public from "./components/Public";
 
-import { BrowserRouter } from "react-router-dom";
+import RequireAuth from "./features/api/RequireAuth";
+
+import Login from "./components/Login";
+
+import Register from "./components/Register";
+
+import Layout from "./components/Layout";
+
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="App">
-        <header>
-          <h1>Leo's Todo List</h1>
-        </header>
-        <AddTodoForm />
-        <TodoList />
-      </div>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        {/* public routes */}
+        <Route index element={<Public />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        {/* protected routes */}
+        <Route element={<RequireAuth />}>
+          <Route path="todos" element={<TodosPage />} />
+        </Route>
+      </Route>
+    </Routes>
   );
 }
 

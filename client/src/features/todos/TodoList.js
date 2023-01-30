@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import { useSelector } from "react-redux";
 
@@ -9,6 +9,7 @@ import Todo from "./Todo";
 import { SpinnerDotted } from "spinners-react";
 
 import { useGetTodosQuery } from "../api/apiSlice";
+import { selectCurrentUser } from "../api/authSlice";
 
 const TodoList = () => {
   const status = useSelector(getStatus);
@@ -20,6 +21,8 @@ const TodoList = () => {
     isError,
     error,
   } = useGetTodosQuery();
+
+  console.log(todos);
 
   let content;
 
@@ -44,6 +47,8 @@ const TodoList = () => {
 
   //show loading screen
   if (isLoading) {
+    // currently not refetching
+    console.log("refetched");
     content = <SpinnerDotted />;
 
     // show the todos
@@ -56,7 +61,7 @@ const TodoList = () => {
       </ul>
     );
   } else if (isError) {
-    content = <div>{error.toString()}</div>;
+    content = <div>EMPTY</div>;
   }
 
   return <div className="todo-container">{content}</div>;

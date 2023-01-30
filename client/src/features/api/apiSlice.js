@@ -3,11 +3,23 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const apiSlice = createApi({
   reducerPath: "api",
   //   define the base url
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3100" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://localhost:3100",
+    credentials: "include",
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.token;
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
   tagTypes: ["Todo"],
   endpoints: (builder) => ({
     getTodos: builder.query({
-      query: () => "/todos",
+      query: () => ({
+        url: "/todos",
+      }),
       providesTags: ["Todo"],
     }),
     createTodo: builder.mutation({
@@ -48,7 +60,17 @@ export const apiSlice = createApi({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ content: content, date: date }),
+        body: JSON.stringify({
+          content: content,
+          date: date,
+        }),
+      }),
+      invalidatesTags: ["Todo"],
+    }),
+    // temporary solution in order refetch todos
+    logout: builder.mutation({
+      query: () => ({
+        url: "/logout",
       }),
       invalidatesTags: ["Todo"],
     }),
@@ -61,4 +83,5 @@ export const {
   useCreateTodoMutation,
   useDeleteTodoMutation,
   useEditTodoMutation,
+  useLogoutMutation,
 } = apiSlice;

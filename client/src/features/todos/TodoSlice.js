@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   todos: [],
   status: "all",
-  statusSpec: "idle",
   error: null,
 };
 
@@ -20,10 +19,16 @@ const TodoSlice = createSlice({
         console.log("no status");
       }
     },
+    resetTodos(state, action) {
+      state.todos = [];
+      state.status = "all";
+      state.error = null;
+      console.log(state.todos, state.status, state.error);
+    },
   },
 });
 
-export const { changeStatus } = TodoSlice.actions;
+export const { changeStatus, resetTodos } = TodoSlice.actions;
 
 //get all the current todos
 export const selectAllTodos = (state) => state.todos.todos;
