@@ -90,9 +90,6 @@ const Login = () => {
           {errMsg}
         </p>
         <button>Sign In</button>
-        <button className="logout-btn" onClick={() => navigate("/")}>
-          <span>Back to Home</span>
-        </button>
       </form>
     </section>
   );

@@ -22,8 +22,6 @@ function App() {
       <Route path="/" element={<Layout />}>
         {/* public routes */}
         <Route index element={<Public />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
         {/* protected routes */}
         <Route element={<RequireAuth />}>
           <Route path="todos" element={<TodosPage />} />

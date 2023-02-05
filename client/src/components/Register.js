@@ -79,9 +79,6 @@ const Register = () => {
           {errMsg}
         </p>
         <button>Register</button>
-        <button className="logout-btn" onClick={() => navigate("/")}>
-          <span>Back To Home</span>
-        </button>
       </form>
     </section>
   );

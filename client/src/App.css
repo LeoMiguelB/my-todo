@@ -231,33 +231,40 @@ a:active {
 }
 
 .outer-log {
-  height: 520px;
-  width: 400px;
-  background-color: rgba(255, 255, 255, 0.13);
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-  border-radius: 10px;
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 40px rgba(8, 7, 16, 0.2);
-  padding: 50px 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 60px;
+}
+
+.outer-log:hover .logReg {
+  filter: blur(3px);
+  opacity: 0.5;
+  transform: scale(0.98);
+  box-shadow: none;
+}
+
+.outer-log:hover .logReg:hover {
+  transform: scale(1);
+  filter: blur(0px);
+  opacity: 1;
 }
 
 .logReg {
   height: 560px;
   width: 400px;
+  border-radius: 50px;
+  background: #e0e0e0;
+  box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.25);
   background-color: rgba(255, 255, 255, 0.13);
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-  border-radius: 10px;
   backdrop-filter: blur(10px);
   border: 2px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 40px rgba(8, 7, 16, 0.2);
   padding: 50px 35px;
+  margin: 15px;
+  margin-top: 50px;
+  transition: 0.2s all;
+  font-size: 13px;
+  padding-top: 30px;
 }
 
 .logReg label {

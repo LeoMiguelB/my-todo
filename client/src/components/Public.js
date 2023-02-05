@@ -1,18 +1,14 @@
 import { Link } from "react-router-dom";
 
+import Login from "./Login";
+
+import Register from "./Register";
+
 const Public = () => {
   const content = (
     <div className="outer-log">
-      <Link to="/login">
-        <div className="log">
-          Login
-        </div>
-      </Link>
-      <Link to="/register">
-        <div className="log">
-          Register
-        </div>
-      </Link>
+      <Login />
+      <Register />
     </div>
   );
 
