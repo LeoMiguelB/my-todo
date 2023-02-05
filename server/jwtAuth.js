@@ -89,7 +89,7 @@ app.post("/register", async (req, res) => {
       "INSERT INTO jwt_auth (username, password) VALUES ($1, $2)",
       [username, hash]
     );
-    res.sendStatus(200);
+    res.send({ success: "successfully registered" });
   } else {
     // this is where the username already exist
     res.sendStatus(409);

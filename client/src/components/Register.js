@@ -1,8 +1,5 @@
 import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-import { useDispatch } from "react-redux";
-
 import { useRegisterMutation } from "../features/api/loginApiSlice";
 
 const Register = () => {
@@ -14,8 +11,6 @@ const Register = () => {
   const navigate = useNavigate();
 
   const [register, { isLoading }] = useRegisterMutation();
-
-  const dispatch = useDispatch();
 
   //when the component loads focus on the username input
   useEffect(() => {
@@ -41,7 +36,7 @@ const Register = () => {
       } else if (error.originalStatus === 409) {
         setErrMsg("Username already exist");
       } else {
-        setErrMsg("Login Failed");
+        setErrMsg("Register Failed");
       }
       errRef.current.focus();
     }
