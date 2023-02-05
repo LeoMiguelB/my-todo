@@ -1,13 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { setCredentials } from "../features/api/authSlice";
 
 import { useLoginMutation } from "../features/api/loginApiSlice";
-
-import { selectCurrentToken } from "../features/api/authSlice";
 
 const Login = () => {
   const userRef = useRef();
@@ -24,16 +22,6 @@ const Login = () => {
   //when the component loads focus on the username input
   useEffect(() => {
     userRef.current.focus();
-  }, []);
-
-  const token = useSelector(selectCurrentToken);
-
-  //currently not working
-  useEffect(() => {
-    //check if the user has already logged in
-    if (token !== null) {
-      navigate("/todos");
-    }
   }, []);
 
   //when changing user or pwd inputs set err msg empty for new potential erros
@@ -54,7 +42,6 @@ const Login = () => {
       setPassword("");
       navigate("/todos");
     } catch (error) {
-      console.log(error);
       if (!error?.originalStatus) {
         setErrMsg("no server response");
       } else if (error.originalStatus === 400) {
@@ -74,17 +61,8 @@ const Login = () => {
     <h1>Loading...</h1>
   ) : (
     <section className="login">
-      <p
-        ref={errRef}
-        className={errMsg ? "errmsg" : "offscreen"}
-        aria-live="assertive"
-      >
-        {errMsg}
-      </p>
-
-      <h1>Login</h1>
-
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="logReg">
+        <h1>Login</h1>
         <label htmlFor="username">Username:</label>
         <input
           type="text"
@@ -104,14 +82,18 @@ const Login = () => {
           value={password}
           required
         />
+        <p
+          ref={errRef}
+          className={errMsg ? "errmsg" : "offscreen"}
+          aria-live="assertive"
+        >
+          {errMsg}
+        </p>
         <button>Sign In</button>
-      </form>
-
-      <footer>
         <button className="logout-btn" onClick={() => navigate("/")}>
-          <span>Back To Home</span>
+          <span>Back to Home</span>
         </button>
-      </footer>
+      </form>
     </section>
   );
 

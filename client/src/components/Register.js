@@ -36,10 +36,10 @@ const Register = () => {
       setPassword("");
       navigate("/");
     } catch (error) {
-      if (!error?.response) {
+      if (!error?.originalStatus) {
         setErrMsg("no server response");
-      } else if (error.originalStatus === 400) {
-        setErrMsg("Missing username or password");
+      } else if (error.originalStatus === 409) {
+        setErrMsg("Username already exist");
       } else {
         setErrMsg("Login Failed");
       }
@@ -55,17 +55,8 @@ const Register = () => {
     <h1>Loading...</h1>
   ) : (
     <section className="register">
-      <p
-        ref={errRef}
-        className={errMsg ? "errmsg" : "offscreen"}
-        aria-live="assertive"
-      >
-        {errMsg}
-      </p>
-
-      <h1>Register</h1>
-
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="logReg">
+        <h1>Register</h1>
         <label htmlFor="username">Username:</label>
         <input
           type="text"
@@ -85,14 +76,18 @@ const Register = () => {
           value={password}
           required
         />
+        <p
+          ref={errRef}
+          className={errMsg ? "errmsg" : "offscreen"}
+          aria-live="assertive"
+        >
+          {errMsg}
+        </p>
         <button>Register</button>
-      </form>
-
-      <footer>
         <button className="logout-btn" onClick={() => navigate("/")}>
           <span>Back To Home</span>
         </button>
-      </footer>
+      </form>
     </section>
   );
 

@@ -43,7 +43,7 @@ const AddTodoForm = () => {
   };
 
   return (
-    <form>
+    <form className="todo-form">
       <input
         value={content}
         onChange={inputTextHandler}

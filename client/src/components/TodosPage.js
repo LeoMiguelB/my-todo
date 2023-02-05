@@ -33,15 +33,15 @@ const TodosPage = () => {
   const welcome = user ? `${user}'s Todos` : `Todo List`;
 
   const content = (
-    <div>
-      <header>
+    <div className="todosPage">
+      <header className="todo-header">
         <h1>{welcome}</h1>
       </header>
       <AddTodoForm />
       <TodoList />
       <footer>
-        <button className="logout-btn" onClick={handleLogout}>
-          <span>LOGOUT</span>
+        <button className="logout-button" onClick={handleLogout}>
+          <span className="logout-button-top">LOGOUT</span>
         </button>
       </footer>
     </div>

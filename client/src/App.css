@@ -13,7 +13,7 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-header {
+.todo-header {
   font-family: "Roboto Slab", serif;
   min-height: 100vh;
   font-size: 4rem;
@@ -23,21 +23,21 @@ header {
   user-select: none;
 }
 
-header:hover {
+.todo-header:hover {
   font-variation-settings: "wght" 550;
   letter-spacing: 0.2px;
 }
 
-header,
-form {
+.todo-header,
+.todo-form {
   min-height: 20vh;
   display: flex;
   justify-content: center;
   align-items: center;
   outline: none;
 }
-form input,
-form button {
+.todo-form input,
+.todo-form button {
   padding: 0.5rem;
   font-size: 2rem;
   border: none;
@@ -45,16 +45,16 @@ form button {
   outline: none;
 }
 
-form input {
+.todo-form input {
   border-bottom-left-radius: 5px;
 }
-form button {
+.todo-form button {
   color: rgba(70, 252, 192, 1);
   background: rgb(255, 255, 255);
   cursor: pointer;
   transition: all 0.3s ease;
 }
-form button:hover {
+.todo-form button:hover {
   background: rgba(70, 252, 191, 0.541);
   color: white;
 }
@@ -204,20 +204,139 @@ select {
 }
 
 .log {
-  align-self: center;
-  display: flexbox;
+  display: flex;
+  margin-top: 60px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: rgba(70, 252, 191, 0.219);
   text-align: center;
-  vertical-align: middle;
-  background-color: rgba(70, 252, 192, 1);
-  width: 200px;
-  height: 40px;
+  height: 100px;
+  border-radius: 10px;
+  font-size: 50px;
+  justify-content: center;
+  align-items: center;
+}
+
+.log:hover {
+  font-size: 52px;
+}
+
+/* remove link decorations */
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: rgba(102, 123, 125, 0.995);
+  text-decoration: none;
+}
+
+.outer-log {
+  height: 520px;
+  width: 400px;
+  background-color: rgba(255, 255, 255, 0.13);
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.2);
+  padding: 50px 35px;
+}
+
+.logReg {
+  height: 560px;
+  width: 400px;
+  background-color: rgba(255, 255, 255, 0.13);
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.2);
+  padding: 50px 35px;
+}
+
+.logReg label {
+  display: block;
+  margin-top: 30px;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  color: #080710;
+}
+
+.logReg h1 {
+  text-align: center;
+  color: #080710;
+  font-size: 35px;
+}
+
+.logReg input {
+  display: block;
+  height: 50px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  padding: 0 10px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.logReg button {
+  margin-top: 50px;
+  width: 100%;
+  background-color: #ffffff;
+  color: #080710;
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: grab;
+}
+
+.logReg .logout-btn {
+  padding: 5px 0;
+}
+
+.logReg .errmsg {
+  color: red;
+  text-align: center;
+}
+
+.todosPage .logout-button {
+  display: flex;
+  --button_radius: 0.75em;
+  --button_color: rgb(70, 252, 191);
+  --button_outline_color: #000000;
+  font-size: 17px;
+  font-weight: bold;
+  border: none;
+  border-radius: var(--button_radius);
+  background: var(--button_outline_color);
   margin: auto;
 }
 
-.logout-btn {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  margin: auto;
-  border: none;
+.todosPage .logout-button .logout-button-top {
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid var(--button_outline_color);
+  border-radius: var(--button_radius);
+  padding: 0.75em 1.5em;
+  background: var(--button_color);
+  color: var(--button_outline_color);
+  transform: translateY(-0.2em);
+  transition: transform 0.1s ease;
+}
+
+.todosPage .logout-button:hover .logout-button-top {
+  transform: translateY(-0.33em);
+}
+
+.todosPage .logout-button:active .logout-button-top {
+  transform: translateY(0);
 }

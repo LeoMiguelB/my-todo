@@ -43,11 +43,6 @@ app.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    //if there are missing credentials send a 400
-    if (!username || !password) {
-      res.sendStatus(400);
-    }
-
     const result = await pool.query(
       "SELECT * FROM jwt_auth WHERE username = $1",
       [username]
@@ -67,7 +62,10 @@ app.post("/login", async (req, res) => {
         };
 
         const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+
         res.json({ accessToken: token });
+      } else {
+        res.sendStatus(400);
       }
     }
   } catch (error) {
@@ -91,9 +89,10 @@ app.post("/register", async (req, res) => {
       "INSERT INTO jwt_auth (username, password) VALUES ($1, $2)",
       [username, hash]
     );
-    res.json({ successful: "user has been created" });
+    res.sendStatus(200);
   } else {
-    res.json({ error: "user already exists" });
+    // this is where the username already exist
+    res.sendStatus(409);
   }
 });
 
