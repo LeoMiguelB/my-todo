@@ -21,8 +21,8 @@ app.use(
   })
 );
 
-app.listen(3200, () => {
-  console.log("server is listening to local host 3200");
+app.listen(6200, () => {
+  console.log("server is listening to local host 6200");
 });
 
 const authenticateToken = (req, res, next) => {

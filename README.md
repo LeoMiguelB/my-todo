@@ -1,5 +1,17 @@
-# my-todo
-A todo website made with react, redux-react, and nodejs.
+# MUSIC_GALLERY
+A simple todo app that allows users to remind themselves through a note interface
 
-Languages and Tools:
-css3 express.js html5 nodejs react react-redux postgresSQL
+## Technologies
+* Basic frameworks: React.js
+* IDE : Visual Studio Code
+
+## NPM packages installed
+* @spinners-react
+* @react
+
+## Screenshots
+![home page](/screenshots/home-page.png)
+![login page](/screenshots/login-page.png)
+
+
+
